@@ -1,0 +1,109 @@
+Distribution Methodology Guide
+
+This tool uses a calibrated I×P → Distribution rubric to convert 
+risk scores into realistic duration distributions.
+
+═══════════════════════════════════════════════════════════════════
+PROBABILITY (0-1) → Distribution Shape
+═══════════════════════════════════════════════════════════════════
+
+Value Range    Level              Base Spread       Distribution Type
+-----------    -----              -----------       -----------------
+0.0 - 0.2      Rare               ±5-10%           Narrow triangular
+0.2 - 0.4      Unlikely           ±10-20%          Triangular
+0.4 - 0.6      Moderate           ±20-30%          BetaPERT
+0.6 - 0.8      Likely             ±30-50%          Skewed BetaPERT
+0.8 - 1.0      Almost Certain     ±50-80%+         Fat-tailed
+
+Higher probability = wider distribution = more uncertainty in duration.
+
+═══════════════════════════════════════════════════════════════════
+IMPACT (0-1) → Distribution Scale
+═══════════════════════════════════════════════════════════════════
+
+Value Range    Level       Duration Effect    Multiplier
+-----------    -----       ---------------    ----------
+0.0 - 0.2      Minimal     +0-2 days         0.5× base spread
+0.2 - 0.4      Minor       +3-7 days         0.75× base spread
+0.4 - 0.6      Moderate    +1-2 weeks        1.0× base spread
+0.6 - 0.8      Major       +3-5 weeks        1.25× base spread
+0.8 - 1.0      Severe      +6+ weeks         1.5× base spread
+
+Higher impact = stretched distribution = larger potential delays.
+
+═══════════════════════════════════════════════════════════════════
+EFFECTIVE SPREAD FORMULA
+═══════════════════════════════════════════════════════════════════
+
+Effective Spread = base(Probability) × scale(Impact)
+
+Example: P=0.75 (Likely), I=0.75 (Major)
+  base = 0.40 (40% spread)
+  scale = 1.25
+  effective = 0.40 × 1.25 = 0.50 (50% spread)
+
+═══════════════════════════════════════════════════════════════════
+FAIL MODE: Early vs Late
+═══════════════════════════════════════════════════════════════════
+
+EARLY-FAIL TASKS
+----------------
+Problems surface quickly at task start.
+• More symmetric (triangular) distribution
+• Smaller right tail - bounded upside risk
+• Uncertainty burns down rapidly in first days/weeks
+
+Examples:
+  - Material procurement with stable suppliers
+  - Internal design tasks with rapid iteration
+  - Fixture builds in mature machine shops
+  - Tasks with quick feedback loops
+
+LATE-FAIL TASKS
+---------------
+Work appears on-track until near completion, then collapses.
+• Right-skewed (BetaPERT) distribution
+• Fat right tail - can extend significantly beyond baseline
+• The true schedule killers in complex programs
+
+Examples:
+  - Supplier readiness / qualification (PPAP)
+  - System integration events
+  - Qualification / validation / regulatory testing
+  - Software maturity with hidden technical debt
+  - First-time processes or new technologies
+
+Why Late-Fail Matters:
+Two tasks with identical baselines and I×P scores behave 
+completely differently if one is early-fail and one is late-fail.
+The late-fail task becomes the dominant driver of P80/P90 dates.
+
+═══════════════════════════════════════════════════════════════════
+METRICS COMPUTED BY MONTE CARLO
+═══════════════════════════════════════════════════════════════════
+
+CRITICALITY INDEX (CI)
+----------------------
+Definition: % of simulations where task lies on the critical path
+Meaning: Structural importance - how often does this task constrain finish?
+
+CI = 100%  → Always critical (structural bottleneck)
+CI = 50%   → Critical in half of scenarios
+CI = 0%    → Never critical (has abundant float)
+
+SCHEDULE SENSITIVITY INDEX (SSI)
+--------------------------------
+Definition: Correlation between task duration and project finish
+Meaning: Statistical influence - when this task slips, does project slip?
+
+SSI ≈ 1.0  → Strong driver of project variance
+SSI ≈ 0.5  → Moderate influence
+SSI ≈ 0.0  → Little/no influence on project completion
+
+INTERPRETATION
+--------------
+High CI + High SSI = Dominant schedule risk (prioritize mitigation)
+High CI + Low SSI  = Structural bottleneck, but low variance
+Low CI + High SSI  = Hidden risk (not deterministically critical, 
+                     but drives variance when it does become critical)
+Low CI + Low SSI   = Safe task (low priority for risk management)

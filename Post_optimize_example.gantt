@@ -1,0 +1,527 @@
+{
+  "tasks": [
+    {
+      "name": "D1_Concept",
+      "start": "2025-12-14",
+      "end": "2026-01-03",
+      "deps": [],
+      "prob": 0.1,
+      "impact": 0.25,
+      "fail_mode": "early"
+    },
+    {
+      "name": "D2_DetailDesign",
+      "start": "2026-01-03",
+      "end": "2026-02-12",
+      "deps": [
+        "D1_Concept"
+      ],
+      "prob": 0.25,
+      "impact": 0.5,
+      "fail_mode": "early"
+    },
+    {
+      "name": "D3_DVT",
+      "start": "2026-02-12",
+      "end": "2026-03-29",
+      "deps": [
+        "D2_DetailDesign"
+      ],
+      "prob": 0.5,
+      "impact": 0.75,
+      "fail_mode": "late"
+    },
+    {
+      "name": "S1_Quote",
+      "start": "2026-01-03",
+      "end": "2026-02-12",
+      "deps": [
+        "D1_Concept"
+      ],
+      "prob": 0.25,
+      "impact": 0.25,
+      "fail_mode": "early"
+    },
+    {
+      "name": "S2a_ProtoSamples",
+      "start": "2026-01-24",
+      "end": "2026-02-11",
+      "deps": [
+        "D1_Concept"
+      ],
+      "prob": 0.35,
+      "impact": 0.25,
+      "fail_mode": "early"
+    },
+    {
+      "name": "S2b_ProdSamples",
+      "start": "2026-02-12",
+      "end": "2026-03-09",
+      "deps": [
+        "D2_DetailDesign",
+        "S2a_ProtoSamples",
+        "S1_Quote"
+      ],
+      "prob": 0.4,
+      "impact": 0.5,
+      "fail_mode": "late"
+    },
+    {
+      "name": "S3a_PrelimQual",
+      "start": "2026-03-09",
+      "end": "2026-03-24",
+      "deps": [
+        "S2b_ProdSamples"
+      ],
+      "prob": 0.4,
+      "impact": 0.35,
+      "fail_mode": "early"
+    },
+    {
+      "name": "S3b_FinalPPAP",
+      "start": "2026-03-29",
+      "end": "2026-04-18",
+      "deps": [
+        "S3a_PrelimQual",
+        "D3_DVT"
+      ],
+      "prob": 0.5,
+      "impact": 0.75,
+      "fail_mode": "late"
+    },
+    {
+      "name": "M1a_ProcessConcept",
+      "start": "2026-01-03",
+      "end": "2026-01-28",
+      "deps": [
+        "D1_Concept"
+      ],
+      "prob": 0.2,
+      "impact": 0.25,
+      "fail_mode": "early"
+    },
+    {
+      "name": "M1b_ProcessDetail",
+      "start": "2026-02-12",
+      "end": "2026-03-09",
+      "deps": [
+        "D2_DetailDesign",
+        "M1a_ProcessConcept"
+      ],
+      "prob": 0.25,
+      "impact": 0.4,
+      "fail_mode": "early"
+    },
+    {
+      "name": "M2_AssessBuild",
+      "start": "2026-03-09",
+      "end": "2026-04-08",
+      "deps": [
+        "S2b_ProdSamples",
+        "M1b_ProcessDetail"
+      ],
+      "prob": 0.45,
+      "impact": 0.6,
+      "fail_mode": "late"
+    },
+    {
+      "name": "M3_ProdRamp",
+      "start": "2026-04-18",
+      "end": "2026-05-18",
+      "deps": [
+        "M2_AssessBuild",
+        "S3b_FinalPPAP"
+      ],
+      "prob": 0.5,
+      "impact": 0.5,
+      "fail_mode": "late"
+    }
+  ],
+  "connector_waypoints": {
+    "D1_Concept|S2a_ProtoSamples": {
+      "points": [
+        [
+          20462,
+          0.0
+        ],
+        [
+          20462,
+          0.375
+        ],
+        [
+          20451,
+          0.375
+        ],
+        [
+          20451,
+          4.0
+        ]
+      ]
+    },
+    "D1_Concept|S1_Quote": {
+      "points": [
+        [
+          20465,
+          0.0
+        ],
+        [
+          20465,
+          0.375
+        ],
+        [
+          20451,
+          0.375
+        ],
+        [
+          20451,
+          3.0
+        ]
+      ]
+    },
+    "D1_Concept|M1a_ProcessConcept": {
+      "points": [
+        [
+          20459.1,
+          0
+        ],
+        [
+          20459,
+          0.375
+        ],
+        [
+          20451,
+          0.375
+        ],
+        [
+          20451,
+          8.0
+        ]
+      ]
+    },
+    "D1_Concept|D2_DetailDesign": {
+      "points": [
+        [
+          20468,
+          0.0
+        ],
+        [
+          20468,
+          0.625
+        ],
+        [
+          20453,
+          0.625
+        ],
+        [
+          20453,
+          1.0
+        ]
+      ]
+    },
+    "D2_DetailDesign|M1b_ProcessDetail": {
+      "points": [
+        [
+          20502,
+          1.0
+        ],
+        [
+          20502,
+          1.375
+        ],
+        [
+          20489,
+          1.375
+        ],
+        [
+          20489,
+          2.5
+        ],
+        [
+          20499,
+          2.5
+        ],
+        [
+          20499,
+          4.375
+        ],
+        [
+          20490,
+          4.375
+        ],
+        [
+          20490,
+          9.0
+        ]
+      ]
+    },
+    "M1a_ProcessConcept|M1b_ProcessDetail": {
+      "points": [
+        [
+          20485,
+          8.0
+        ],
+        [
+          20485,
+          9.0
+        ]
+      ]
+    },
+    "D2_DetailDesign|D3_DVT": {
+      "points": [
+        [
+          20506,
+          1.0
+        ],
+        [
+          20506,
+          1.625
+        ],
+        [
+          20493,
+          1.625
+        ],
+        [
+          20493,
+          2.0
+        ]
+      ]
+    },
+    "S2a_ProtoSamples|S2b_ProdSamples": {
+      "points": [
+        [
+          20502,
+          4.0
+        ],
+        [
+          20502,
+          4.625
+        ],
+        [
+          20493,
+          4.625
+        ],
+        [
+          20493,
+          5.0
+        ]
+      ]
+    },
+    "D2_DetailDesign|S2b_ProdSamples": {
+      "points": [
+        [
+          20504,
+          1.0
+        ],
+        [
+          20504,
+          1.5
+        ],
+        [
+          20491,
+          1.5
+        ],
+        [
+          20491,
+          2.375
+        ],
+        [
+          20502,
+          2.375
+        ],
+        [
+          20502,
+          4.625
+        ],
+        [
+          20493,
+          4.625
+        ],
+        [
+          20493,
+          5.0
+        ]
+      ]
+    },
+    "S2b_ProdSamples|S3a_PrelimQual": {
+      "points": [
+        [
+          20525,
+          5.0
+        ],
+        [
+          20525,
+          5.0
+        ],
+        [
+          20525,
+          5.5
+        ],
+        [
+          20518,
+          5.5
+        ],
+        [
+          20518,
+          6.0
+        ]
+      ]
+    },
+    "S2b_ProdSamples|M2_AssessBuild": {
+      "points": [
+        [
+          20525,
+          5.0
+        ],
+        [
+          20525,
+          5.5
+        ],
+        [
+          20518,
+          5.5
+        ],
+        [
+          20518,
+          8.125
+        ],
+        [
+          20524,
+          8.125
+        ],
+        [
+          20524,
+          9.5
+        ],
+        [
+          20517,
+          9.5
+        ],
+        [
+          20517,
+          10.0
+        ]
+      ]
+    },
+    "M1b_ProcessDetail|M2_AssessBuild": {
+      "points": [
+        [
+          20524,
+          9.0
+        ],
+        [
+          20524,
+          9.5
+        ],
+        [
+          20517,
+          9.5
+        ],
+        [
+          20517,
+          10.0
+        ]
+      ]
+    },
+    "S1_Quote|S2b_ProdSamples": {
+      "points": [
+        [
+          20501,
+          3.0
+        ],
+        [
+          20502,
+          3.0
+        ],
+        [
+          20502,
+          4.625
+        ],
+        [
+          20493,
+          4.625
+        ],
+        [
+          20493,
+          5.0
+        ]
+      ]
+    },
+    "D3_DVT|S3b_FinalPPAP": {
+      "points": [
+        [
+          20544.1,
+          2
+        ],
+        [
+          20544,
+          6.0
+        ],
+        [
+          20544,
+          6.5
+        ],
+        [
+          20538,
+          6.5
+        ],
+        [
+          20538,
+          7.0
+        ]
+      ]
+    },
+    "S3a_PrelimQual|S3b_FinalPPAP": {
+      "points": [
+        [
+          20544,
+          6.0
+        ],
+        [
+          20544,
+          6.5
+        ],
+        [
+          20538,
+          6.5
+        ],
+        [
+          20538,
+          7.0
+        ]
+      ]
+    },
+    "S3b_FinalPPAP|M3_ProdRamp": {
+      "points": [
+        [
+          20564.1,
+          7
+        ],
+        [
+          20564,
+          10.0
+        ],
+        [
+          20557,
+          10.0
+        ],
+        [
+          20557,
+          11.0
+        ]
+      ]
+    },
+    "M2_AssessBuild|M3_ProdRamp": {
+      "points": [
+        [
+          20557,
+          10.0
+        ],
+        [
+          20557,
+          11.0
+        ]
+      ]
+    }
+  },
+  "use_manual_order": true
+}

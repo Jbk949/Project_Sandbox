@@ -1,0 +1,23 @@
+Project Gantt Chart with Dependencies & Risk
+Version 2.0 - Risk-Driven Timeline Architecture
+
+A project scheduling tool featuring:
+• Gantt chart visualization
+• Task dependencies with editable orthogonal connectors
+• Calibrated I×P → Distribution mapping
+• Early-fail vs Late-fail modeling
+• Monte Carlo risk simulation
+• Criticality Index (CI)
+• Schedule Sensitivity Index (SSI)
+
+Use probability and impact values to model
+schedule risk and identify critical tasks.
+
+Keyboard Shortcuts:
+• Ctrl+N: New Project
+• Ctrl+O: Open Project
+• Ctrl+S: Save Project
+• Ctrl+E: Toggle Connector Edit Mode
+• Ctrl+G: Toggle Snap to Grid
+• F1: Risk Assessment Guide
+• Del: Delete Selected Task
